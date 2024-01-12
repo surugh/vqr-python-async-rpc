@@ -1,8 +1,8 @@
 # vqr-python-async-rpc
 Lightweight VQR async JSON-RPC Python client.
 
-Serves as a tiny layer between an application and a Bitcoin daemon, its primary usage
-is querying the current state of Bitcoin blockchain, network stats, transactions...
+Serves as a tiny layer between an application and a VQRcoin daemon, its primary usage
+is querying the current state of VQRcoin blockchain, network stats, transactions...
 
 If you want complete Bitcoin experience in Python, consult
 [python-bitcoinlib](https://github.com/petertodd/python-bitcoinlib).
@@ -70,8 +70,8 @@ Minimal illustration (assuming Python 3.8+, where you can run `async` code in co
 $ python -m asyncio
 >>> import asyncio
 >>>
->>> from bitcoinrpc import VqrcoinRPC
->>> rpc = VqrcoinRPC.from_config("http://localhost:18443", ("rpc_user", "rpc_passwd"))
+>>> from vqrcoinrpc import VqrcoinRPC
+>>> rpc = VqrcoinRPC.from_config("http://localhost:7332", ("rpc_user", "rpc_passwd"))
 >>> await rpc.getconnectioncount()
 10
 >>> await rpc.aclose()  # Clean-up resource
@@ -82,14 +82,14 @@ all the resource clean-up automatically, as the following example shows:
 
 ```python
 $ cat
-btc_rpc_minimal.py
+vqr_rpc_minimal.py
 import asyncio
 
 from bitcoinrpc import VqrcoinRPC
 
 
 async def main():
-  async with VqrcoinRPC.from_config("http://localhost:18443",
+  async with VqrcoinRPC.from_config("http://localhost:7332",
                                     ("rpc_user", "rpc_password")) as rpc:
     print(await rpc.getconnectioncount())
 
@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
 Running this script yields:
 ```
-$ python btc_rpc_minimal.py
+$ python vqr_rpc_minimal.py
 10
 ```
 
@@ -110,7 +110,7 @@ out over the wire:
 
 ```python
 $ cat
-btc_custom_client.py
+vqr_custom_client.py
 import asyncio
 
 import httpx
@@ -125,7 +125,7 @@ async def log_request(request: httpx.Request) -> None:
 async def main() -> None:
   client = httpx.AsyncClient(auth=("rpc_user", "rpc_password"),
                              event_hooks={"request": [log_request]})
-  async with VqrcoinRPC(url="http://localhost:18443", client=client) as rpc:
+  async with VqrcoinRPC(url="http://localhost:7332", client=client) as rpc:
     print(await rpc.getconnectioncount())
 
 
@@ -136,7 +136,7 @@ if __name__ == "__main__":
 Running this script yields:
 
 ```
-$ python btc_custom_client.py 
+$ python vqr_custom_client.py 
 b'{"jsonrpc":"2.0","id":1,"method":"getconnectioncount","params":[]}'
 0
 ```
