@@ -32,6 +32,7 @@ from bitcoinrpc._types import (
     RawTransaction,
     UtxoUpdatePSBT,
     WalletProcessPSBT,
+    SendToAddress
 )
 
 # Neat trick found in asyncio library for task enumeration
@@ -81,9 +82,10 @@ class VqrcoinRPC:
         **options: Any,
     ) -> Self:
         """
-        Instantiate the `VqrcoinRPC` client while also configuring the underlying `httpx.AsyncClient`. Additional
-        options are passed directly as kwargs to `httpx.AsyncClient`, so it's your responsibility to conform to its
-        interface.
+        Instantiate the `VqrcoinRPC` client while also configuring
+        the underlying `httpx.AsyncClient`.
+        Additional options are passed directly as kwargs to `httpx.AsyncClient`,
+        so it's your responsibility to conform to its interface.
         """
 
         options = dict(options)
@@ -136,6 +138,57 @@ class VqrcoinRPC:
             raise RPCError(content["error"]["code"], content["error"]["message"])
         else:
             return content["result"]
+
+    """Wallet"""
+    async def sendtoaddress(
+            self,
+            address: str,
+            amount: float,
+            comment: Optional[str] = None,
+            comment_to: Optional[str] = None,
+            subtractfeefromamount: Optional[bool] = True,
+            avoid_reuse: Optional[bool] = False,
+    ) -> SendToAddress:
+        """
+        https://developer.bitcoin.org/reference/rpc/sendtoaddress.html
+
+        :param address: The coin address to send to.
+        :param amount: The amount in coin to send. eg 0.1
+        :param: comment: A comment used to store what the transaction is for.
+            This is not part of the transaction, just kept in your wallet.
+        :param: comment_to: A comment to store the name of the person or
+            organization to which you're sending the transaction.
+            This is not part of the transaction, just kept in your wallet.
+        :param: subtractfeefromamount: The fee will be deducted from the amount being sent.
+            The recipient will receive less coins than you enter in the amount field.
+        :param: avoid_reuse: (only available if avoid_reuse wallet flag is set)
+            Avoid spending from dirty addresses; addresses are considered
+            dirty if they have previously been used in a transaction.
+        """
+        return await self.acall(
+            "sendtoaddress",
+            [address, amount, comment, comment_to, subtractfeefromamount,
+             avoid_reuse],
+        )
+
+    async def walletprocesspsbt(
+            self,
+            psbt: str,
+            sign: bool = True,
+            sighashtype: str = "ALL",
+            bip32_derivs: bool = True,
+    ) -> WalletProcessPSBT:
+        """
+        https://developer.bitcoin.org/reference/rpc/walletprocesspsbt.html
+
+        :param psbt: base64 string of a partially signed bitcoin transaction
+        :param sign: Sign the transaction too when updating
+        :param sighashtype: signature hash type to sign, if it is not specified by PSBT.
+        :param bip32_derivs: include bip32 derivation paths for pubkeys if known
+        """
+        return await self.acall(
+            "walletprocesspsbt", [psbt, sign, sighashtype, bip32_derivs]
+        )
 
     """Blockchain"""
     async def getmempoolinfo(self) -> MempoolInfo:
@@ -199,8 +252,10 @@ class VqrcoinRPC:
         """
         https://developer.bitcoin.org/reference/rpc/getblock.html
 
+        :param block_hash: The block hash
         :param verbosity: 0 for hex-encoded block data, 1 for block data with
             transactions list, 2 for block data with each transaction.
+        :param timeout: Timeout optional
         """
         return await self.acall(
             "getblock", [block_hash, verbosity], timeout=httpx.Timeout(timeout)
@@ -303,36 +358,16 @@ class VqrcoinRPC:
     async def utxoupdatepsbt(
         self,
         psbt: str,
-        descriptors: Optional[List[Union[str, Dict[str, Union[int, str]]]]] = None,
+        descriptors: Optional[List[Union[str, Dict[str, Union[int, str]]]]] = None
     ) -> UtxoUpdatePSBT:
         """
         https://developer.bitcoin.org/reference/rpc/utxoupdatepsbt.html
 
         :param psbt: base64 string of a partially signed bitcoin transaction
-        :param extract: If set to true and the transaction is complete, return a hex-encoded network transaction
+        :param descriptors: An array of either strings or objects
         """
         if descriptors is not None:
             params = [psbt, descriptors]
         else:
             params = [psbt]
         return await self.acall("utxoupdatepsbt", params)  # type: ignore
-
-    """Wallet"""
-    async def walletprocesspsbt(
-        self,
-        psbt: str,
-        sign: bool = True,
-        sighashtype: str = "ALL",
-        bip32_derivs: bool = True,
-    ) -> WalletProcessPSBT:
-        """
-        https://developer.bitcoin.org/reference/rpc/walletprocesspsbt.html
-
-        :param psbt: base64 string of a partially signed bitcoin transaction
-        :param sign: Sign the transaction too when updating
-        :param sighashtype: signature hash type to sign, if it is not specified by PSBT.
-        :param bip32_derivs: include bip32 derivation paths for pubkeys if known
-        """
-        return await self.acall(
-            "walletprocesspsbt", [psbt, sign, sighashtype, bip32_derivs]
-        )

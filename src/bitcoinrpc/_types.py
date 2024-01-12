@@ -15,6 +15,14 @@ CombinePSBT = str
 JoinPSBTs = str
 UtxoUpdatePSBT = str
 
+class _SendToAddress(TypedDict):
+    """Returned when verbose is set to `True`. Otherwise, `str` is returned"""
+
+    txid: str
+    fee_reason: str
+
+
+SendToAddress = Union[str, "_SendToAddress"]
 
 class MempoolInfo(TypedDict):
     loaded: bool
