@@ -1,3 +1,5 @@
 orjson>=3
 httpx<1
 typing_extensions>=3.7.4.3
+bitcoinrpc~=0.6.1
+setuptools==69.0.3
