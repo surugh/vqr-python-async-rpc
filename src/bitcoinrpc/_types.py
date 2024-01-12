@@ -236,6 +236,7 @@ BitcoinRPCResponse = TypeVar(
     BlockStats,
     Block,
     RawTransaction,
+    SendToAddress,
     CombinePSBT,
     JoinPSBTs,
     UtxoUpdatePSBT,
