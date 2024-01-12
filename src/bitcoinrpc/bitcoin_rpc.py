@@ -46,8 +46,10 @@ class VqrcoinRPC:
     Class representing a JSON-RPC client of a Bitcoin node.
 
     :param url: URL of the Bitcoin node.
-    :param client: Underlying `httpx.AsyncClient`, which handles the requests issued.
-    :param counter: Optional callable that serves as a generator for the "id" field within JSON-RPC requests.
+    :param client: Underlying `httpx.AsyncClient`, 
+        which handles the requests issued.
+    :param counter: Optional callable that serves as a generator 
+        for the "id" field within JSON-RPC requests.
 
     For list of all available commands, visit:
     https://developer.bitcoin.org/reference/rpc/index.html
@@ -93,7 +95,9 @@ class VqrcoinRPC:
             "content-type": "application/json",
             **dict(options.pop("headers", {})),
         }
-        return cls(url, httpx.AsyncClient(auth=auth, headers=headers, **options))
+        return cls(
+            url, httpx.AsyncClient(auth=auth, headers=headers, **options)
+        )
 
     @property
     def url(self) -> str:
@@ -135,7 +139,9 @@ class VqrcoinRPC:
 
         content = orjson.loads(response.content)
         if content["error"] is not None:
-            raise RPCError(content["error"]["code"], content["error"]["message"])
+            raise RPCError(
+                content["error"]["code"], content["error"]["message"]
+            )
         else:
             return content["result"]
 
@@ -154,14 +160,14 @@ class VqrcoinRPC:
 
         :param address: The coin address to send to.
         :param amount: The amount in coin to send. eg 0.1
-        :param: comment: A comment used to store what the transaction is for.
+        :param comment: A comment used to store what the transaction is for.
             This is not part of the transaction, just kept in your wallet.
-        :param: comment_to: A comment to store the name of the person or
+        :param comment_to: A comment to store the name of the person or
             organization to which you're sending the transaction.
             This is not part of the transaction, just kept in your wallet.
-        :param: subtractfeefromamount: The fee will be deducted from the amount being sent.
+        :param subtractfeefromamount: The fee will be deducted from the amount being sent.
             The recipient will receive less coins than you enter in the amount field.
-        :param: avoid_reuse: (only available if avoid_reuse wallet flag is set)
+        :param avoid_reuse: (only available if avoid_reuse wallet flag is set)
             Avoid spending from dirty addresses; addresses are considered
             dirty if they have previously been used in a transaction.
         """
@@ -183,7 +189,8 @@ class VqrcoinRPC:
 
         :param psbt: base64 string of a partially signed bitcoin transaction
         :param sign: Sign the transaction too when updating
-        :param sighashtype: signature hash type to sign, if it is not specified by PSBT.
+        :param sighashtype: signature hash type to sign,
+            if it is not specified by PSBT.
         :param bip32_derivs: include bip32 derivation paths for pubkeys if known
         """
         return await self.acall(
@@ -220,7 +227,9 @@ class VqrcoinRPC:
         return await self.acall("getblockcount", [])
 
     async def getblockheader(
-        self, block_hash: str, verbose: bool = True
+        self,
+        block_hash: str,
+        verbose: bool = True
     ) -> BlockHeader:
         """https://developer.bitcoin.org/reference/rpc/getblockheader.html"""
         return await self.acall("getblockheader", [block_hash, verbose])
@@ -272,12 +281,15 @@ class VqrcoinRPC:
 
         :param nblocks: -1 for estimated hash power since last difficulty change,
             otherwise as an average over last provided number of blocks
-        :param height: If not provided, get estimated hash power for the latest block
-        :param timeout: If doing a lot of processing, no timeout may come in handy
+        :param height: If not provided,
+            get estimated hash power for the latest block
+        :param timeout: If doing a lot of processing,
+            no timeout may come in handy
         """
         return await self.acall(
             "getnetworkhashps", [nblocks, height], timeout=httpx.Timeout(timeout)
         )
+
     """Mining"""
     async def getmininginfo(self) -> MiningInfo:
         """https://developer.bitcoin.org/reference/rpc/getmininginfo.html"""
@@ -305,7 +317,8 @@ class VqrcoinRPC:
         """
         https://developer.bitcoin.org/reference/rpc/combinepsbt.html
 
-        :param psbts: base64 strings, each representing a partially signed bitcoin transaction
+        :param psbts: base64 strings,
+            each representing a partially signed bitcoin transaction
         """
         return await self.acall("combinepsbt", list(psbts))
 
@@ -317,12 +330,17 @@ class VqrcoinRPC:
         """
         return await self.acall("decodepsbt", [psbt])
 
-    async def finalizepsbt(self, psbt: str, extract: bool = True) -> FinalizePSBT:
+    async def finalizepsbt(
+            self,
+            psbt: str,
+            extract: bool = True
+    ) -> FinalizePSBT:
         """
         https://developer.bitcoin.org/reference/rpc/finalizepsbt.html
 
         :param psbt: base64 string of a partially signed bitcoin transaction
-        :param extract: If set to true and the transaction is complete, return a hex-encoded network transaction
+        :param extract: If set to true and the transaction is complete,
+            return a hex-encoded network transaction
         """
         return await self.acall("finalizepsbt", [psbt, extract])
 
@@ -336,10 +354,12 @@ class VqrcoinRPC:
         """
         https://developer.bitcoin.org/reference/rpc/getrawtransactiono.html
 
-        :param txid: If transaction is not in mempool, block_hash must also be provided.
+        :param txid: If transaction is not in mempool,
+            block_hash must also be provided.
         :param verbose: True for JSON, False for hex-encoded string
         :param block_hash: see ^txid
-        :param timeout: If doing a lot of processing, no timeout may come in handy
+        :param timeout: If doing a lot of processing,
+            no timeout may come in handy
         """
         return await self.acall(
             "getrawtransaction",
@@ -351,14 +371,17 @@ class VqrcoinRPC:
         """
         https://developer.bitcoin.org/reference/rpc/joinpsbts.html
 
-        :param psbts: base64 strings, each representing a partially signed bitcoin transaction
+        :param psbts: base64 strings,
+            each representing a partially signed bitcoin transaction
         """
         return await self.acall("joinpsbts", list(psbts))
 
     async def utxoupdatepsbt(
         self,
         psbt: str,
-        descriptors: Optional[List[Union[str, Dict[str, Union[int, str]]]]] = None
+        descriptors: Optional[
+            List[Union[str, Dict[str, Union[int, str]]]]
+        ] = None
     ) -> UtxoUpdatePSBT:
         """
         https://developer.bitcoin.org/reference/rpc/utxoupdatepsbt.html

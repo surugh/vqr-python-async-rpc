@@ -2,7 +2,9 @@ from typing import Any, Dict, List, TypeVar, Union
 
 from typing_extensions import Literal, NotRequired, TypedDict
 
-JSONType = Union[None, bool, int, float, str, List["JSONType"], Dict[str, "JSONType"]]
+JSONType = Union[
+    None, bool, int, float, str, List["JSONType"], Dict[str, "JSONType"]
+]
 
 # Type aliases for 1-to-1 match of RPC method and its return type
 ConnectionCount = int
@@ -15,6 +17,7 @@ CombinePSBT = str
 JoinPSBTs = str
 UtxoUpdatePSBT = str
 
+
 class _SendToAddress(TypedDict):
     """Returned when verbose is set to `True`. Otherwise, `str` is returned"""
 
@@ -23,6 +26,7 @@ class _SendToAddress(TypedDict):
 
 
 SendToAddress = Union[str, "_SendToAddress"]
+
 
 class MempoolInfo(TypedDict):
     loaded: bool
@@ -85,7 +89,8 @@ class _ChainTipsDetail(TypedDict):
     height: int
     hash: str
     branchlen: int
-    status: Literal["active", "valid-fork", "valid-headers", "headers-only", "invalid"]
+    status: Literal[
+        "active", "valid-fork", "valid-headers", "headers-only", "invalid"]
 
 
 ChainTips = List["_ChainTipsDetail"]
