@@ -35,13 +35,13 @@ def get_long_description(readme_file: str) -> str:
 
 
 setup(
-    name="bitcoinrpc",
+    name="vqrcoinrpc",
     python_requires=">=3.7",
-    version=get_version("bitcoinrpc"),
-    description="Lightweight Bitcoin JSON-RPC Python asynchronous client",
+    version=get_version("vqrcoinrpc"),
+    description="Lightweight VQR JSON-RPC Python asynchronous client",
     long_description=get_long_description("README.md"),
     long_description_content_type="text/markdown",
-    keywords="bitcoin async json-rpc",
+    keywords="vqr async json-rpc",
     license="MIT",
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -55,10 +55,10 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    url="https://github.com/bibajz/bitcoin-python-async-rpc",
-    author="Libor Martinek",
-    author_email="libasmartinek@protonmail.com",
+    url="https://github.com/surugh/vqr-python-async-rpc",
+    author="Libor Martinek, Peerchemist, Surugh",
+    author_email="surugh@gmail.com",
     package_dir={"": "src"},
-    packages=["bitcoinrpc"],
+    packages=["vqrcoinrpc"],
     install_requires=get_requirements("requirements.txt"),
 )
