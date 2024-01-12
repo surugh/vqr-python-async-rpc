@@ -39,7 +39,7 @@ from bitcoinrpc._types import (
 _next_rpc_id = itertools.count(1).__next__
 
 
-class BitcoinRPC:
+class VqrcoinRPC:
     __slots__ = ("_url", "_client", "_counter")
     """
     Class representing a JSON-RPC client of a Bitcoin node.
@@ -62,7 +62,7 @@ class BitcoinRPC:
         self._client = client
         self._counter = counter
 
-    async def __aenter__(self) -> "BitcoinRPC":
+    async def __aenter__(self) -> "VqrcoinRPC":
         return self
 
     async def __aexit__(
@@ -81,7 +81,7 @@ class BitcoinRPC:
         **options: Any,
     ) -> Self:
         """
-        Instantiate the `BitcoinRPC` client while also configuring the underlying `httpx.AsyncClient`. Additional
+        Instantiate the `VqrcoinRPC` client while also configuring the underlying `httpx.AsyncClient`. Additional
         options are passed directly as kwargs to `httpx.AsyncClient`, so it's your responsibility to conform to its
         interface.
         """
