@@ -1,5 +1,5 @@
-# bitcoin-python-async-rpc
-Lightweight Bitcoin async JSON-RPC Python client.
+# vqr-python-async-rpc
+Lightweight VQR async JSON-RPC Python client.
 
 Serves as a tiny layer between an application and a Bitcoin daemon, its primary usage
 is querying the current state of Bitcoin blockchain, network stats, transactions...
@@ -9,12 +9,12 @@ If you want complete Bitcoin experience in Python, consult
 
 ## Installation
 ```bash
-$ pip install bitcoinrpc
+$ pip install vqrcoinrpc
 ```
 
 ## Supported methods
 Here is a list of supported methods, divided by their categories. Should you need
-method not implemented, wrap the call in `BitcoinRPC.acall(<your_method>, ...)` coroutine.
+method not implemented, wrap the call in `VqrcoinRPC.acall(<your_method>, ...)` coroutine.
 
 ### Blockchain
 
@@ -70,30 +70,32 @@ Minimal illustration (assuming Python 3.8+, where you can run `async` code in co
 $ python -m asyncio
 >>> import asyncio
 >>>
->>> from bitcoinrpc import BitcoinRPC
->>> rpc = BitcoinRPC.from_config("http://localhost:18443", ("rpc_user", "rpc_passwd"))
+>>> from bitcoinrpc import VqrcoinRPC
+>>> rpc = VqrcoinRPC.from_config("http://localhost:18443", ("rpc_user", "rpc_passwd"))
 >>> await rpc.getconnectioncount()
 10
 >>> await rpc.aclose()  # Clean-up resource
 ```
 
-You can also use the `BitcoinRPC` as an asynchronous context manager, which does
+You can also use the `VqrcoinRPC` as an asynchronous context manager, which does
 all the resource clean-up automatically, as the following example shows:
 
 ```python
-$ cat btc_rpc_minimal.py
+$ cat
+btc_rpc_minimal.py
 import asyncio
 
-from bitcoinrpc import BitcoinRPC
+from bitcoinrpc import VqrcoinRPC
 
 
 async def main():
-    async with BitcoinRPC.from_config("http://localhost:18443", ("rpc_user", "rpc_password")) as rpc:
-        print(await rpc.getconnectioncount())
+  async with VqrcoinRPC.from_config("http://localhost:18443",
+                                    ("rpc_user", "rpc_password")) as rpc:
+    print(await rpc.getconnectioncount())
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+  asyncio.run(main())
 ```
 
 Running this script yields:
@@ -102,31 +104,33 @@ $ python btc_rpc_minimal.py
 10
 ```
 
-If you want customize the underlying `httpx.AsyncClient`, you can instantiate the `BitcoinRPC` with one.
+If you want customize the underlying `httpx.AsyncClient`, you can instantiate the `VqrcoinRPC` with one.
 Consider the following script, where the client is configured to log every HTTP request before it is sent
 out over the wire:
 
 ```python
-$ cat btc_custom_client.py
+$ cat
+btc_custom_client.py
 import asyncio
 
 import httpx
 
-from bitcoinrpc import BitcoinRPC
+from bitcoinrpc import VqrcoinRPC
 
 
 async def log_request(request: httpx.Request) -> None:
-    print(request.content)
+  print(request.content)
 
 
 async def main() -> None:
-    client = httpx.AsyncClient(auth=("rpc_user", "rpc_password"), event_hooks={"request": [log_request]})
-    async with BitcoinRPC(url="http://localhost:18443", client=client) as rpc:
-        print(await rpc.getconnectioncount())
+  client = httpx.AsyncClient(auth=("rpc_user", "rpc_password"),
+                             event_hooks={"request": [log_request]})
+  async with VqrcoinRPC(url="http://localhost:18443", client=client) as rpc:
+    print(await rpc.getconnectioncount())
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+  asyncio.run(main())
 ```
 
 Running this script yields:
@@ -231,10 +235,10 @@ If you do not want to run tests marked as `"integration"`, which denote those re
 
 - **2023/06/04 - 0.6.1**: Add RPC methods, mainly concerned with PSBTs
 - **2023/06/01 - 0.6.0**:
-  * `BitcoinRPC` is now instantiated with a `httpx.AsyncClient` directly and an optional `counter` argument, which is a callable that may be used for distinguishing
-    the JSON-RPC requests. Old-style instantiation, with `url` and optional user/password tuple, is kept within `BitcoinRPC.from_config` method.
+  * `VqrcoinRPC` is now instantiated with a `httpx.AsyncClient` directly and an optional `counter` argument, which is a callable that may be used for distinguishing
+    the JSON-RPC requests. Old-style instantiation, with `url` and optional user/password tuple, is kept within `VqrcoinRPC.from_config` method.
 
-- **2021/12/28 - 0.5.0** change the signature of `BitcoinRPC` from `host, port, ...` to `url, ...`, delegating the creation of the node url to the caller.
+- **2021/12/28 - 0.5.0** change the signature of `VqrcoinRPC` from `host, port, ...` to `url, ...`, delegating the creation of the node url to the caller.
 
 ## License
 MIT

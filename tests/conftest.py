@@ -14,7 +14,7 @@ class _RpcConfig(TypedDict):
 @pytest.fixture(scope="session")
 def rpc_config() -> _RpcConfig:
     """
-    Fixture of connection parameters usable by `BitcoinRPC.from_config`, kept in sync with bitcoin-regtest.conf
+    Fixture of connection parameters usable by `VqrcoinRPC.from_config`, kept in sync with bitcoin-regtest.conf
     file.
     """
 
