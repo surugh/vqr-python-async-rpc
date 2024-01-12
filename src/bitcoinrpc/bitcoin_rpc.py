@@ -137,25 +137,14 @@ class VqrcoinRPC:
         else:
             return content["result"]
 
+    """Blockchain"""
     async def getmempoolinfo(self) -> MempoolInfo:
         """https://developer.bitcoin.org/reference/rpc/getmempoolinfo.html"""
         return await self.acall("getmempoolinfo", [])
 
-    async def getmininginfo(self) -> MiningInfo:
-        """https://developer.bitcoin.org/reference/rpc/getmininginfo.html"""
-        return await self.acall("getmininginfo", [])
-
-    async def getnetworkinfo(self) -> NetworkInfo:
-        """https://developer.bitcoin.org/reference/rpc/getnetworkinfo.html"""
-        return await self.acall("getnetworkinfo", [])
-
     async def getblockchaininfo(self) -> BlockchainInfo:
         """https://developer.bitcoin.org/reference/rpc/getblockchaininfo.html"""
         return await self.acall("getblockchaininfo", [])
-
-    async def getconnectioncount(self) -> ConnectionCount:
-        """https://developer.bitcoin.org/reference/rpc/getconnectioncount.html"""
-        return await self.acall("getconnectioncount", [])
 
     async def getchaintips(self) -> ChainTips:
         """https://developer.bitcoin.org/reference/rpc/getchaintips.html"""
@@ -217,27 +206,6 @@ class VqrcoinRPC:
             "getblock", [block_hash, verbosity], timeout=httpx.Timeout(timeout)
         )
 
-    async def getrawtransaction(
-        self,
-        txid: str,
-        verbose: bool = True,
-        block_hash: Optional[str] = None,
-        timeout: Optional[float] = 5.0,
-    ) -> RawTransaction:
-        """
-        https://developer.bitcoin.org/reference/rpc/getrawtransactiono.html
-
-        :param txid: If transaction is not in mempool, block_hash must also be provided.
-        :param verbose: True for JSON, False for hex-encoded string
-        :param block_hash: see ^txid
-        :param timeout: If doing a lot of processing, no timeout may come in handy
-        """
-        return await self.acall(
-            "getrawtransaction",
-            [txid, verbose, block_hash],
-            timeout=httpx.Timeout(timeout),
-        )
-
     async def getnetworkhashps(
         self,
         nblocks: int = -1,
@@ -255,7 +223,21 @@ class VqrcoinRPC:
         return await self.acall(
             "getnetworkhashps", [nblocks, height], timeout=httpx.Timeout(timeout)
         )
+    """Mining"""
+    async def getmininginfo(self) -> MiningInfo:
+        """https://developer.bitcoin.org/reference/rpc/getmininginfo.html"""
+        return await self.acall("getmininginfo", [])
 
+    """Network"""
+    async def getconnectioncount(self) -> ConnectionCount:
+        """https://developer.bitcoin.org/reference/rpc/getconnectioncount.html"""
+        return await self.acall("getconnectioncount", [])
+
+    async def getnetworkinfo(self) -> NetworkInfo:
+        """https://developer.bitcoin.org/reference/rpc/getnetworkinfo.html"""
+        return await self.acall("getnetworkinfo", [])
+
+    """Raw transactions"""
     async def analyzepsbt(self, psbt: str) -> AnalyzePSBT:
         """
         https://developer.bitcoin.org/reference/rpc/analyzepsbt.html
@@ -289,6 +271,27 @@ class VqrcoinRPC:
         """
         return await self.acall("finalizepsbt", [psbt, extract])
 
+    async def getrawtransaction(
+        self,
+        txid: str,
+        verbose: bool = True,
+        block_hash: Optional[str] = None,
+        timeout: Optional[float] = 5.0,
+    ) -> RawTransaction:
+        """
+        https://developer.bitcoin.org/reference/rpc/getrawtransactiono.html
+
+        :param txid: If transaction is not in mempool, block_hash must also be provided.
+        :param verbose: True for JSON, False for hex-encoded string
+        :param block_hash: see ^txid
+        :param timeout: If doing a lot of processing, no timeout may come in handy
+        """
+        return await self.acall(
+            "getrawtransaction",
+            [txid, verbose, block_hash],
+            timeout=httpx.Timeout(timeout),
+        )
+
     async def joinpsbts(self, *psbts: str) -> JoinPSBTs:
         """
         https://developer.bitcoin.org/reference/rpc/joinpsbts.html
@@ -314,6 +317,7 @@ class VqrcoinRPC:
             params = [psbt]
         return await self.acall("utxoupdatepsbt", params)  # type: ignore
 
+    """Wallet"""
     async def walletprocesspsbt(
         self,
         psbt: str,
