@@ -18,6 +18,12 @@ JoinPSBTs = str
 UtxoUpdatePSBT = str
 
 
+class CreateWallet(TypedDict):
+
+    name: str
+    warning: str
+
+
 class SignRawTransactionWithWallet(TypedDict):
 
     hex: str
@@ -281,6 +287,7 @@ BitcoinRPCResponse = TypeVar(
     ListRecievedByAddress,
     ListUnspent,
     SignRawTransactionWithWallet,
+    CreateWallet,
     CombinePSBT,
     JoinPSBTs,
     UtxoUpdatePSBT,

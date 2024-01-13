@@ -67,6 +67,8 @@ method not implemented, wrap the call in `VqrcoinRPC.acall(<your_method>, ...)` 
 | `listreceivedbyaddress`        |     ✔      |
 | `listunspent`                  |     ✔      |
 | `signrawtransactionwithwallet` |     ✔      |
+| `createwallet`                 |     ✔      |
+| `walletpassphrase`             |     ✔      |
 | `walletprocesspsbt`            |     ✔      |
 
 ## Usage
