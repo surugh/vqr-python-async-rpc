@@ -20,7 +20,8 @@ UtxoUpdatePSBT = str
 
 class ListAddressGroupings(TypedDict):
 
-    result: Union[List]
+    address: str
+    amount: int
 
 
 class GetWalletInfo(TypedDict):
@@ -42,7 +43,7 @@ class GetWalletInfo(TypedDict):
 
 class GetBalance(TypedDict):
 
-    balance: int
+    total_amount: int
 
 
 class CreateWallet(TypedDict):
