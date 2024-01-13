@@ -146,6 +146,18 @@ class VqrcoinRPC:
             return content["result"]
 
     """Wallet"""
+    async def importpubkey(
+        self, pubkey: str, label: Optional[str], rescan: Optional[bool] = True
+    ) -> None:
+        """
+        https://developer.bitcoin.org/reference/rpc/importpubkey.html
+
+        :param pubkey: The hex-encoded public key.
+        :param label: An optional label.
+        :param rescan: Rescan the wallet for transactions
+        """
+        return await self.acall("importpubkey", [pubkey, label, rescan])
+
     async def getnewaddress(
         self,
         label: Optional[str] = None,
