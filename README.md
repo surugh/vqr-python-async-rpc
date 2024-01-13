@@ -243,7 +243,7 @@ If you do not want to run tests marked as `"integration"`, which denote those re
 
 ## Changelog
 
-- **2023/06/01 - 0.6.2**: Add wallet RPC methods, from *coin fork
+- **2024/01/13 - 0.6.2**: Add wallet RPC methods, from *coin fork
 - **2023/06/04 - 0.6.1**: Add RPC methods, mainly concerned with PSBTs
 - **2023/06/01 - 0.6.0**:
   * `VqrcoinRPC` is now instantiated with a `httpx.AsyncClient` directly and an optional `counter` argument, which is a callable that may be used for distinguishing
