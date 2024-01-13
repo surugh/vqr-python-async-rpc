@@ -3,7 +3,7 @@ from typing import Any, Dict
 import httpx
 import pytest
 
-from bitcoinrpc import VqrcoinRPC
+from vqrcoinrpc import VqrcoinRPC
 
 
 @pytest.mark.asyncio
@@ -49,7 +49,7 @@ async def test_connection_and_sample_rpc(rpc_config: Dict[str, Any]) -> None:
 @pytest.mark.asyncio
 async def test_connection_and_incorrect_rpc(rpc_config: Dict[str, Any]) -> None:
     """
-    Incorrect values of arguments will not raise the `bitcoinrpc.RPCError`,
+    Incorrect values of arguments will not raise the `vqrcoinrpc.RPCError`,
     but server error 500.
     """
     btc_rpc = VqrcoinRPC.from_config(**rpc_config)

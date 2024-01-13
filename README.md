@@ -93,11 +93,12 @@ all the resource clean-up automatically, as the following example shows:
 
 $ cat
 vqr_rpc_minimal.py
+
 ```python
 
 import asyncio
 
-from bitcoinrpc import VqrcoinRPC
+from vqrcoinrpc import VqrcoinRPC
 
 
 async def main():
@@ -122,13 +123,14 @@ out over the wire:
 
 $ cat
 vqr_custom_client.py
+
 ```python
 
 import asyncio
 
 import httpx
 
-from bitcoinrpc import VqrcoinRPC
+from vqrcoinrpc import VqrcoinRPC
 
 
 async def log_request(request: httpx.Request) -> None:

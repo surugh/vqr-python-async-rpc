@@ -4,7 +4,7 @@ Test module exposing various errors which can occur when configuring `VqrcoinRPC
 
 import pytest
 
-from bitcoinrpc import VqrcoinRPC
+from vqrcoinrpc import VqrcoinRPC
 
 
 def test_unknown_httpx_option_provided_raises() -> None:

@@ -6,8 +6,8 @@ import httpx
 import orjson
 from typing_extensions import Literal, Self
 
-from bitcoinrpc._exceptions import RPCError
-from bitcoinrpc._types import (
+from vqrcoinrpc._exceptions import RPCError
+from vqrcoinrpc._types import (
     AnalyzePSBT,
     BestBlockHash,
     BitcoinRPCResponse,
