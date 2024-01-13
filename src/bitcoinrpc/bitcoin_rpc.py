@@ -146,6 +146,24 @@ class VqrcoinRPC:
             return content["result"]
 
     """Wallet"""
+    async def getnewaddress(
+        self,
+        label: Optional[str] = None,
+        address_type: Optional[str] = "legacy"
+    ) -> str:
+        """
+        https://developer.bitcoin.org/reference/rpc/getnewaddress.html
+
+        :param label: The label name for the address to be linked to.
+            It can also be set to the empty string “”
+            to represent the default label.
+            The label does not need to exist,
+            it will be created if there is no label by the given name.
+        :param address_type: The address type to use.
+            Options are “legacy”, “p2sh-segwit”, and “bech32”.
+        """
+        return await self.acall("getnewaddress", [label, address_type])
+
     async def sendtoaddress(
             self,
             address: str,

@@ -62,6 +62,7 @@ method not implemented, wrap the call in `VqrcoinRPC.acall(<your_method>, ...)` 
 | Method              | Supported? |
 |---------------------|:----------:|
 | `sendtoaddress`     |     ✔      |
+| `getnewaddress`     |     ✔      |
 | `walletprocesspsbt` |     ✔      |
 
 ## Usage
