@@ -32,7 +32,8 @@ from bitcoinrpc._types import (
     RawTransaction,
     UtxoUpdatePSBT,
     WalletProcessPSBT,
-    SendToAddress
+    SendToAddress,
+    ListRecievedByAddress
 )
 
 # Neat trick found in asyncio library for task enumeration
@@ -146,6 +147,28 @@ class VqrcoinRPC:
             return content["result"]
 
     """Wallet"""
+    async def listreceivedbyaddress(
+        self,
+        include_watchonly: Optional[bool],
+        address_filter: Optional[str],
+        include_empty: Optional[bool] = False,
+        minconf: Optional[int] = 1,
+    ) -> List[ListRecievedByAddress]:
+        """
+        https://developer.bitcoin.org/reference/rpc/listreceivedbyaddress.html
+
+        :param minconf: The minimum number of confirmations
+            before payments are included.
+        :param include_empty: Whether to include addresses
+            that haven't received any payments.
+        :param include_watchonly: Whether to include watch-only addresses
+        :param address_filter If present, only return information on this address.
+        """
+        return await self.acall(
+            "listreceivedbyaddress",
+            [minconf, include_empty, include_watchonly, address_filter],
+        )
+
     async def importpubkey(
         self, pubkey: str, label: Optional[str], rescan: Optional[bool] = True
     ) -> None:

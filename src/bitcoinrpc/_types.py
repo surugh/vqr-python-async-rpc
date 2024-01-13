@@ -18,6 +18,14 @@ JoinPSBTs = str
 UtxoUpdatePSBT = str
 
 
+class ListRecievedByAddress(TypedDict):
+
+    involvesWatchonly: bool
+    address: str
+    amount: int
+    confirmations: int
+    label: str
+    txids: List[str]
 
 
 class _SendToAddress(TypedDict):
@@ -245,6 +253,7 @@ BitcoinRPCResponse = TypeVar(
     Block,
     RawTransaction,
     SendToAddress,
+    ListRecievedByAddress,
     CombinePSBT,
     JoinPSBTs,
     UtxoUpdatePSBT,

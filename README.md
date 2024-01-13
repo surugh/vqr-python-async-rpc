@@ -59,15 +59,17 @@ method not implemented, wrap the call in `VqrcoinRPC.acall(<your_method>, ...)` 
 
 ### Wallet
 
-| Method              | Supported? |
-|---------------------|:----------:|
-| `sendtoaddress`     |     ✔      |
-| `getnewaddress`     |     ✔      |
-| `walletprocesspsbt` |     ✔      |
+| Method                  | Supported? |
+|-------------------------|:----------:|
+| `sendtoaddress`         |     ✔      |
+| `importpubkey`          |     ✔      |
+| `getnewaddress`         |     ✔      |
+| `listreceivedbyaddress` |     ✔      |
+| `walletprocesspsbt`     |     ✔      |
 
 ## Usage
 Minimal illustration (assuming Python 3.8+, where you can run `async` code in console)
-
+listreceivedbyaddress
 ```
 $ python -m asyncio
 >>> import asyncio
