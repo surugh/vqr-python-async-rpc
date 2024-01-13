@@ -33,7 +33,8 @@ from bitcoinrpc._types import (
     UtxoUpdatePSBT,
     WalletProcessPSBT,
     SendToAddress,
-    ListRecievedByAddress
+    ListRecievedByAddress,
+    ListUnspent
 )
 
 # Neat trick found in asyncio library for task enumeration
@@ -147,6 +148,30 @@ class VqrcoinRPC:
             return content["result"]
 
     """Wallet"""
+    async def listunspent(
+        self,
+        minconf: Optional[int] = 1,
+        maxconf: Optional[int] = 9999999,
+        addresses: Optional[list] = None,
+        include_unsafe: Optional[bool] = True,
+        query_options: Optional[dict] = None
+    ) -> List[ListUnspent]:
+        """
+        https://developer.bitcoin.org/reference/rpc/listunspent.html?highlight=listunspent
+
+        :param minconf: The minimum number of confirmations
+            before payments are included.
+        :param maxconf: The maximum confirmations to filter
+        :param addresses: The vqrcoin addresses to filter
+        :param include_unsafe: Include outputs that are not safe to spend
+        :param query_options: JSON with query options,
+            see bitcoin docs for more info.
+        """
+        return await self.acall(
+            "listunspent",
+            [minconf, maxconf, addresses, include_unsafe, query_options],
+        )
+
     async def listreceivedbyaddress(
         self,
         include_watchonly: Optional[bool],

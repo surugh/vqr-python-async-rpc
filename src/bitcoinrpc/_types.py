@@ -18,6 +18,24 @@ JoinPSBTs = str
 UtxoUpdatePSBT = str
 
 
+class ListUnspent(TypedDict):
+
+    txid: str
+    vout: int
+    address: str
+    label: str
+    scriptPubKey: str
+    amount: int
+    confirmations: int
+    redeemScript: str
+    witnessScript: str
+    spendable: bool
+    solvable: bool
+    reused: bool
+    desc: str
+    safe: bool
+
+
 class ListRecievedByAddress(TypedDict):
 
     involvesWatchonly: bool
@@ -254,6 +272,7 @@ BitcoinRPCResponse = TypeVar(
     RawTransaction,
     SendToAddress,
     ListRecievedByAddress,
+    ListUnspent,
     CombinePSBT,
     JoinPSBTs,
     UtxoUpdatePSBT,
