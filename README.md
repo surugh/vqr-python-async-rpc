@@ -18,44 +18,44 @@ method not implemented, wrap the call in `VqrcoinRPC.acall(<your_method>, ...)` 
 
 ### Blockchain
 
-|   Method   |   Supported?     |
-|------------|:----------------:|
-| `getbestblockhash` | ✔ |
-| `getblock` | ✔ |
-| `getblockchaininfo` | ✔ |
-| `getblockcount` | ✔ |
-| `getblockhash` | ✔ |
-| `getblockheader` | ✔ |
-| `getblockstats` | ✔ |
-| `getchaintips` | ✔ |
-| `getdifficulty` | ✔ |
-| `getmempoolinfo` | ✔ |
-| `getnetworkhashps` | ✔ |
+| Method              | Supported? |
+|---------------------|:----------:|
+| `getbestblockhash`  |     ✔      |
+| `getblock`          |     ✔      |
+| `getblockchaininfo` |     ✔      |
+| `getblockcount`     |     ✔      |
+| `getblockhash`      |     ✔      |
+| `getblockheader`    |     ✔      |
+| `getblockstats`     |     ✔      |
+| `getchaintips`      |     ✔      |
+| `getdifficulty`     |     ✔      |
+| `getmempoolinfo`    |     ✔      |
+| `getnetworkhashps`  |     ✔      |
 
 ### Mining
 
-|   Method   |   Supported?     |
-|------------|:----------------:|
-| `getmininginfo` | ✔ |
+| Method          | Supported? |
+|-----------------|:----------:|
+| `getmininginfo` |     ✔      |
 
 ### Network
 
-|   Method   |   Supported?     |
-|------------|:----------------:|
-| `getconnectioncount` | ✔ |
-| `getnetworkinfo` | ✔ |
+| Method               | Supported? |
+|----------------------|:----------:|
+| `getconnectioncount` |     ✔      |
+| `getnetworkinfo`     |     ✔      |
 
 ### Raw transactions
 
-|   Method   |   Supported?     |
-|------------|:----------------:|
-| `analyzepsbt` | ✔ |
-| `combinepsbt` | ✔ |
-| `decodepsbt` | ✔ |
-| `finalizepsbt` | ✔ |
-| `getrawtransaction` | ✔ |
-| `joinpsbts` | ✔ |
-| `utxoupdatepsbt` | ✔ |
+| Method              | Supported? |
+|---------------------|:----------:|
+| `analyzepsbt`       |     ✔      |
+| `combinepsbt`       |     ✔      |
+| `decodepsbt`        |     ✔      |
+| `finalizepsbt`      |     ✔      |
+| `getrawtransaction` |     ✔      |
+| `joinpsbts`         |     ✔      |
+| `utxoupdatepsbt`    |     ✔      |
 
 ### Wallet
 
@@ -81,9 +81,10 @@ $ python -m asyncio
 You can also use the `VqrcoinRPC` as an asynchronous context manager, which does
 all the resource clean-up automatically, as the following example shows:
 
-```python
 $ cat
 vqr_rpc_minimal.py
+```python
+
 import asyncio
 
 from bitcoinrpc import VqrcoinRPC
@@ -109,9 +110,10 @@ If you want customize the underlying `httpx.AsyncClient`, you can instantiate th
 Consider the following script, where the client is configured to log every HTTP request before it is sent
 out over the wire:
 
-```python
 $ cat
 vqr_custom_client.py
+```python
+
 import asyncio
 
 import httpx
