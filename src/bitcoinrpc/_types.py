@@ -25,12 +25,24 @@ class ListAddressGroupings(TypedDict):
 
 class GetWalletInfo(TypedDict):
 
-    result: dict
+    walletname: str
+    walletversion: int
+    format: str
+    balance: int
+    unconfirmed_balance: int
+    immature_balance: int
+    txcount: int
+    keypoololdest: int
+    keypoolsize: int
+    paytxfee: int
+    hdseedid: str
+    hdmasterkeyid: str
+    private_keys_enabled: bool
 
 
 class GetBalance(TypedDict):
 
-    n: int
+    balance: int
 
 
 class CreateWallet(TypedDict):
