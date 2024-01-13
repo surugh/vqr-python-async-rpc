@@ -34,7 +34,8 @@ from bitcoinrpc._types import (
     WalletProcessPSBT,
     SendToAddress,
     ListRecievedByAddress,
-    ListUnspent
+    ListUnspent,
+    SignRawTransactionWithWallet,
 )
 
 # Neat trick found in asyncio library for task enumeration
@@ -148,6 +149,25 @@ class VqrcoinRPC:
             return content["result"]
 
     """Wallet"""
+    async def signrawtransactionwithwallet(
+        self,
+        hexstring: str,
+        prevtxs: Optional[dict] = None,
+        sighashtype: Optional[str] = "ALL",
+    ) -> SignRawTransactionWithWallet:
+        """
+        https://developer.bitcoin.org/reference/rpc/signrawtransactionwithwallet.html
+
+        :param hexstring: The transaction hex string
+        :param prevtxs: The previous dependent transaction outputs
+        :param sighashtype: The signature hash type.
+            Must be one of “ALL” “NONE” “SINGLE”
+            “ALL|ANYONECANPAY” “NONE|ANYONECANPAY” “SINGLE|ANYONECANPAY”
+        """
+        return await self.acall(
+            "signrawtransactionwithwallet", [hexstring, prevtxs, sighashtype]
+        )
+
     async def listunspent(
         self,
         minconf: Optional[int] = 1,

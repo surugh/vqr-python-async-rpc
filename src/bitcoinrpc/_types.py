@@ -18,6 +18,13 @@ JoinPSBTs = str
 UtxoUpdatePSBT = str
 
 
+class SignRawTransactionWithWallet(TypedDict):
+
+    hex: str
+    complete: bool
+    errors: list
+
+
 class ListUnspent(TypedDict):
 
     txid: str
@@ -273,6 +280,7 @@ BitcoinRPCResponse = TypeVar(
     SendToAddress,
     ListRecievedByAddress,
     ListUnspent,
+    SignRawTransactionWithWallet,
     CombinePSBT,
     JoinPSBTs,
     UtxoUpdatePSBT,
