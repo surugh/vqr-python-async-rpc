@@ -123,7 +123,8 @@ BlockHeader = Union[str, "_BlockHeader"]
 
 class BlockStats(TypedDict):
     """
-    Returned dictionary will contain subset of the following, depending on filtering.
+    Returned dictionary will contain subset of the following,
+    depending on filtering.
     """
 
     avgfee: int
