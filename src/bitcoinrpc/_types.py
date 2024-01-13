@@ -18,6 +18,16 @@ JoinPSBTs = str
 UtxoUpdatePSBT = str
 
 
+class ListAddressGroupings(TypedDict):
+
+    result: Union[List]
+
+
+class GetWalletInfo(TypedDict):
+
+    result: dict
+
+
 class GetBalance(TypedDict):
 
     n: int
@@ -300,5 +310,7 @@ BitcoinRPCResponse = TypeVar(
     DecodePSBT,
     FinalizePSBT,
     WalletProcessPSBT,
-    GetBalance
+    GetBalance,
+    GetWalletInfo,
+    ListAddressGroupings
 )

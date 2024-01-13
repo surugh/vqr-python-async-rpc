@@ -37,7 +37,9 @@ from bitcoinrpc._types import (
     ListUnspent,
     SignRawTransactionWithWallet,
     CreateWallet,
-    GetBalance
+    GetBalance,
+    GetWalletInfo,
+    ListAddressGroupings
 )
 
 # Neat trick found in asyncio library for task enumeration
@@ -151,13 +153,13 @@ class VqrcoinRPC:
             return content["result"]
 
     """Wallet"""
-    async def getwalletinfo(self) -> Dict:
+    async def getwalletinfo(self) -> GetWalletInfo:
         """
         https://developer.bitcoin.org/reference/rpc/getwalletinfo.html?highlight=getwalletinfo
         """
         return await self.acall("getwalletinfo", [])
 
-    async def listaddressgroupings(self) -> Union[List]:
+    async def listaddressgroupings(self) -> ListAddressGroupings:
         """
         https://developer.bitcoin.org/reference/rpc/listaddressgroupings.html?highlight=listaddressgrouping
         """
