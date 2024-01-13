@@ -7,7 +7,7 @@ from setuptools import setup
 
 def get_version(package: str) -> str:
     """
-    Extract package version, located in the `src/package/__version__.py`.
+    Extract package version, located in the `src/bitcoin/__version__.py`.
     """
     version = Path("src", package, "__version__.py").read_text()
     pattern = r"__version__ = ['\"]([^'\"]+)['\"]"
