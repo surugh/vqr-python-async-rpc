@@ -18,6 +18,11 @@ JoinPSBTs = str
 UtxoUpdatePSBT = str
 
 
+class GetBalance(TypedDict):
+
+    n: int
+
+
 class CreateWallet(TypedDict):
 
     name: str
@@ -295,4 +300,5 @@ BitcoinRPCResponse = TypeVar(
     DecodePSBT,
     FinalizePSBT,
     WalletProcessPSBT,
+    GetBalance
 )

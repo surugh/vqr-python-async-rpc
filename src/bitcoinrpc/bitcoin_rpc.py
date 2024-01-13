@@ -37,6 +37,7 @@ from bitcoinrpc._types import (
     ListUnspent,
     SignRawTransactionWithWallet,
     CreateWallet,
+    GetBalance
 )
 
 # Neat trick found in asyncio library for task enumeration
@@ -150,6 +151,41 @@ class VqrcoinRPC:
             return content["result"]
 
     """Wallet"""
+    async def getwalletinfo(self) -> Dict:
+        """
+        https://developer.bitcoin.org/reference/rpc/getwalletinfo.html?highlight=getwalletinfo
+        """
+        return await self.acall("getwalletinfo", [])
+
+    async def listaddressgroupings(self) -> Union[List]:
+        """
+        https://developer.bitcoin.org/reference/rpc/listaddressgroupings.html?highlight=listaddressgrouping
+        """
+        return await self.acall("listaddressgroupings", [])
+
+    async def getbalance(
+            self,
+            dummy: Optional[str] = "*",
+            minconf: Optional[int] = 0,
+            include_watchonly: Optional[bool] = False,
+            avoid_reuse: Optional[bool] = True
+    ) -> GetBalance:
+        """
+        https://developer.bitcoin.org/reference/rpc/getbalance.html?highlight=getbalance
+        
+        :param dummy: Remains for backward compatibility. 
+            Must be excluded or set to “*”.
+        :param minconf: Only include transactions confirmed at least this many times.
+        :param include_watchonly: Also include balance in watch-only addresses 
+            (see ‘importaddress’)
+        :param avoid_reuse: (only available if avoid_reuse wallet flag is set) 
+            Do not include balance in dirty outputs; addresses are considered dirty
+            if they have previously been used in a transaction.
+        """
+        return await self.acall(
+            "getbalance", [dummy, minconf, include_watchonly, avoid_reuse]
+        )
+
     async def walletpassphrase(
             self,
             passphrase: str,
