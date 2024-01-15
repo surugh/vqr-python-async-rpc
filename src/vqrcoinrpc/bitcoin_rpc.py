@@ -179,9 +179,6 @@ class VqrcoinRPC:
         :param minconf: Only include transactions confirmed at least this many times.
         :param include_watchonly: Also include balance in watch-only addresses 
             (see ‘importaddress’)
-        :param avoid_reuse: (only available if avoid_reuse wallet flag is set) 
-            Do not include balance in dirty outputs; addresses are considered dirty
-            if they have previously been used in a transaction.
         """
         return await self.acall(
             "getbalance", [dummy, minconf, include_watchonly]
