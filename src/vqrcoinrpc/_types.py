@@ -16,12 +16,7 @@ NetworkHashps = float
 CombinePSBT = str
 JoinPSBTs = str
 UtxoUpdatePSBT = str
-
-
-class ListAddressGroupings(TypedDict):
-
-    address: str
-    amount: int
+ListAddressGroupings = Union[Any, List[list]]
 
 
 class GetWalletInfo(TypedDict):
@@ -43,7 +38,7 @@ class GetWalletInfo(TypedDict):
 
 class GetBalance(TypedDict):
 
-    total_amount: int
+    total_amount: float
 
 
 class CreateWallet(TypedDict):

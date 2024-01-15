@@ -170,7 +170,6 @@ class VqrcoinRPC:
             dummy: Optional[str] = "*",
             minconf: Optional[int] = 0,
             include_watchonly: Optional[bool] = False,
-            avoid_reuse: Optional[bool] = True
     ) -> GetBalance:
         """
         https://developer.bitcoin.org/reference/rpc/getbalance.html?highlight=getbalance
@@ -185,7 +184,7 @@ class VqrcoinRPC:
             if they have previously been used in a transaction.
         """
         return await self.acall(
-            "getbalance", [dummy, minconf, include_watchonly, avoid_reuse]
+            "getbalance", [dummy, minconf, include_watchonly]
         )
 
     async def walletpassphrase(
